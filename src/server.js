@@ -16,6 +16,10 @@ app.use(cors());
 routes.loadRoutes(app);
 app.listen(port);
 
+app.get('/test', function (req, res) {
+    res.send("Success!");
+})
+
 var mongoDBconfig = require('./config/mongoDatabase.config');
 var mongoose = require('mongoose');
 
@@ -31,6 +35,8 @@ mongoose.connection.on('error', function () {
 mongoose.connection.once('open', function () {
     console.log('Successfully connected');
 });
+
+
 
 module.exports = app;
 console.log('Internation listing successfully connected on ' + port);

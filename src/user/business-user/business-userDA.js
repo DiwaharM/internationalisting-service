@@ -316,10 +316,10 @@ exports.createIndes = function (req, res) {
     })
 }
 exports.getSearch = function (req, res) {
-   /*  businessUserDetail.createIndexes({
+    businessUserDetail.createIndexes({
         "companyName": "text", "categoryName": "text", "subCategoryName": "text", "country": "text",
         "listingCompanyName": "text", "listingCountry": "text"
-    }) */
+    })
   /*   businessUserDetail.ensureIndexes({"companyName": "text"}) */
    /*  businessUserDetail.createIndexes({"companyName": "text" , "categoryName": "text", "subCategoryName": "text", "country": "text",
     "listingCompanyName": "text", "listingCountry": "text"}) */

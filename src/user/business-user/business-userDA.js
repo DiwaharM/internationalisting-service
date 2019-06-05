@@ -317,12 +317,8 @@ exports.createIndes = function (req, res) {
 }
 exports.getSearch = function (req, res) {
     businessUserDetail.createIndexes({
-        "companyName": "text", "categoryName": "text", "subCategoryName": "text", "country": "text",
-        "listingCompanyName": "text", "listingCountry": "text"
+        "companyName": "text", "categoryName": "text", "subCategoryName": "text", "country": "text"
     })
-  /*   businessUserDetail.ensureIndexes({"companyName": "text"}) */
-   /*  businessUserDetail.createIndexes({"companyName": "text" , "categoryName": "text", "subCategoryName": "text", "country": "text",
-    "listingCompanyName": "text", "listingCountry": "text"}) */
     businessUserDetail.find({$text: {$search: req.params.search}}, {score: {$meta: "textScore"}}).sort({score:{$meta:"textScore"}}).select().exec(function (err, data) {
         if (err) {
             res.status(500).json(err);

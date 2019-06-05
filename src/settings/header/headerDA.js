@@ -9,10 +9,15 @@ exports.getImageForHeader = function (req, res) {
         if (err) {
             res.status(500).json(err);
         } else {
-            for (let i = 0; i <= data.length - 1; i++) {
-                data[i].logoImageName = appSetting.headerServerPath + data[i].logoImageName;
+            if (data.length === 0) {
+                res.status(200).json(data);
+            } else {
+                for (let i = 0; i <= data.length - 1; i++) {
+                    data[i].logoImageName = appSetting.headerServerPath + data[i].logoImageName;
+                }
+                res.status(200).json(data);
             }
-            res.status(200).json(data);
+
         }
     })
 }

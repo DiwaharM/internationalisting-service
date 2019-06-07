@@ -7,3 +7,11 @@ exports.getPromotion = function (req, res) {
         console.log(error);
     }
 }
+
+exports.getAllListing = function (req, res) {
+    try {
+        promotionDA.getAllListing(req, res);
+    } catch (error) {
+        console.log(error);
+    }
+}

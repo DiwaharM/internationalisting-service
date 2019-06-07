@@ -17,5 +17,6 @@ module.exports = function (app) {
     app.route('/getcontact').get(contactMgr.getContact);
     app.route('/getfaq').get(faqMgr.getFaq);
     app.route('/getpromotion').get(promotionMgr.getPromotion);
+    app.route('/getalllistinggradewise').get(promotionMgr.getAllListing);
     app.route('/getads').get(adsMgr.getAllAds);
 }

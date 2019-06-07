@@ -1,5 +1,6 @@
 var promotionDetail = require('../../model/promotion.model');
 var appSetting = require('../../config/appSetting');
+var businessuserDetail = require('../../model/business-user-account.model');
 
 exports.getPromotion = function (req, res) {
     promotionDetail.aggregate([{
@@ -39,6 +40,22 @@ exports.getPromotion = function (req, res) {
             res.status(200).json(promotions);
 
 
+        }
+    })
+}
+
+exports.getAllListing = function(req, res) {
+    businessuserDetail.find({}).sort({"packageDetails.grade": 1}).exec(function(err, data) {
+        if(err) {
+            res.status(500).json(err);
+        } else {
+            var dataLength = data.length - 1;
+            if(data.length !== 0) {
+            for (let i = 0; i <= dataLength; i++) {
+                data[i].logImageName = appSetting.businessUserServerPath +  data[i]._id + '/' + 'logo' + '/' + data[i].logImageName;
+            }
+        }
+            res.status(200).json(data);
         }
     })
 }

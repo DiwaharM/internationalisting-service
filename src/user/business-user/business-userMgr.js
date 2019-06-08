@@ -215,3 +215,10 @@ exports.getVistiorCount = function (req, res) {
         console.log(error);
     }
 }
+exports.getPaymentPackage = function (req, res) {
+    try {
+        businessDA.getPaymentPackage(req, res);
+    } catch (error) {
+        console.log(error);
+    }
+}

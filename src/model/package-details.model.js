@@ -1,8 +1,10 @@
 var mongoose = require('mongoose');
 
 const PackageSchema = new mongoose.Schema({
-    duration: String,
-    amount: String,
-    grade: String
+    duration: Number,
+    amount: Number,
+    grade: Number,
+    startingDate: Date,
+    closingDate: Date
 });
 module.exports = PackageSchema;

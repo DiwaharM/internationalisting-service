@@ -2,31 +2,55 @@ var businessUserDetail = require('../../model/business-user-account.model');
 var categoryDetail = require('../../model/superCategory.model');
 var appSetting = require('../../config/appSetting');
 var customerLogs = require('../../model/customerLog.model');
+var paymentPackage = require('../../model/paymentPackage.model');
 
 exports.createBusinessUser = function (req, res) {
-    var CreateBusUser = new businessUserDetail();
-    CreateBusUser.firstName = req.body.firstName;
-    CreateBusUser.lastName = req.body.lastName;
-    CreateBusUser.companyName = req.body.companyName;
-    CreateBusUser.country = req.body.country;
-    CreateBusUser.emailId = req.body.emailId;
-    CreateBusUser.mobileNumber = req.body.mobileNumber;
-    CreateBusUser.password = req.body.password;
-    CreateBusUser.packageDetails = req.body.packageDetails;
-    /*   CreateBusUser.listingCompanyName= req.body.listingCompanyName;
-      CreateBusUser.listingCountry= req.body.listingCountry;
-      CreateBusUser,listingEmailId= req.body.listingEmailId;
-      CreateBusUser.listingMobileNumber= req.body.listingMobileNumber;
-      CreateBusUser.weblink= req.body.weblink;
-      CreateBusUser.category= req.body.category;
-     
-      CreateBusUser.logImageName= req.body.logImageName;
-      CreateBusUser.companyImageName= req.body.companyImageName; */
-    CreateBusUser.save(function (err, data) {
+    var createBusUser = new businessUserDetail();
+    createBusUser.firstName = req.body.firstName;
+    createBusUser.lastName = req.body.lastName;
+    createBusUser.companyName = req.body.companyName;
+    createBusUser.country = req.body.country;
+    createBusUser.emailId = req.body.emailId;
+    createBusUser.mobileNumber = req.body.mobileNumber;
+    createBusUser.password = req.body.password;
+    createBusUser.save(function (err, userFirstSave) {
         if (err) {
             res.status(500).json(err);
         } else {
-            res.status(200).json(data);
+            paymentPackage.findOne({'_id': req.body.checkID}).select().exec(function(err, packageData) {
+                if(err) {
+                    res.status(500).json(err);
+                } else {
+                     var currentDate = new Date();
+        var startDay = currentDate.getDate();
+        var startMonth = currentDate.getMonth() + 1;
+        var startYear = currentDate.getFullYear();
+        var starting = startMonth + "/" + startDay + "/" + startYear;
+        var lastDate = new Date();
+        lastDate.setDate(currentDate.getDate() + packageData.duration);
+        var closingDay = lastDate.getDate();
+        var closingMonth = lastDate.getMonth() + 1;
+        var closingYear = lastDate.getFullYear();
+        var closing = closingMonth + "/" + closingDay + "/" + closingYear;
+        let package = {
+            grade: packageData.grade,
+            duration: packageData.duration,
+            amount: packageData.amount,
+            startingDate: starting,
+            closingDate: closing
+        }
+        businessUserDetail.findOneAndUpdate({"_id": userFirstSave._id},
+        { $push: {
+            packageDetails: package
+        }}, function(err, data) {
+            if(err) {
+                res.status(500).json(err); 
+            } else {
+                res.status(200).json(data);
+            }
+        })
+                }
+            })
         }
     })
 }
@@ -399,6 +423,16 @@ exports.getVistiorCount = function (req, res) {
             } else {
                 res.status(200).json(count);
             }
+        }
+    })
+}
+
+exports.getPaymentPackage = function(req, res) {
+    paymentPackage.find({}).sort({grade: 1}).exec(function(err, data) {
+        if(err) {
+            res.status(500).json(err);
+        } else {
+            res.status(200).json(data);
         }
     })
 }

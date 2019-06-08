@@ -78,4 +78,7 @@ module.exports = function (app) {
 
     app.route('/subscriberselectedcurrentreport/:id')
     .post(reportMgr.getSubscriberCurrentReport);
+
+    app.route('/getallpaymentpackage')
+    .get(businessUserMgr.getPaymentPackage);
 }

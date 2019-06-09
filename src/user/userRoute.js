@@ -4,6 +4,7 @@ var reviewMgr = require('./review/reviewMgr');
 var reportMgr = require('./report/reportMgr');
 
 module.exports = function (app) {
+
     app.route('/makesubscribe')
     .post(subscribeMgr.createSubscribeUser);
 
@@ -81,4 +82,11 @@ module.exports = function (app) {
 
     app.route('/getallpaymentpackage')
     .get(businessUserMgr.getPaymentPackage);
+
+    app.route('/checkExpirt')
+    .get(businessUserMgr.checkExpiry);
+
+    app.route('/updatepayment/:id')
+    .put(businessUserMgr.updatePayment);
+    
 }

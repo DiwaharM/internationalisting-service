@@ -7,6 +7,7 @@ var contactMgr = require('./contact-us/contactMgr');
 var faqMgr = require('./faq/faqMgr');
 var promotionMgr = require('./promotion/promotionMgr');
 var adsMgr = require('./ads/adsMgr');
+var footerMgr = require('./footer/footerMgr');
 
 module.exports = function (app) {
     app.route('/getheader').get(headerMgr.getImageForHeader);
@@ -19,4 +20,5 @@ module.exports = function (app) {
     app.route('/getpromotion').get(promotionMgr.getPromotion);
     app.route('/getalllistinggradewise').get(promotionMgr.getAllListing);
     app.route('/getads').get(adsMgr.getAllAds);
+    app.route('/getfooter').get(footerMgr.getFooterDetail);
 }

@@ -22,7 +22,8 @@ const BusinessUserSchema = new mongoose.Schema({
     packageDetails: [package],
     logImageName: String,
     companyImageName: [String],
-    customerLogs: [cutomerlog]
+    customerLogs: [cutomerlog],
+    activation: Boolean
 });
 const BusinessAccount = mongoose.model('businessuseraccount', BusinessUserSchema);
 module.exports = BusinessAccount;

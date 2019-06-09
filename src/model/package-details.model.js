@@ -5,6 +5,7 @@ const PackageSchema = new mongoose.Schema({
     amount: Number,
     grade: Number,
     startingDate: Date,
-    closingDate: Date
+    closingDate: Date,
+    active: Boolean
 });
 module.exports = PackageSchema;

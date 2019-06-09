@@ -17,38 +17,44 @@ exports.createBusinessUser = function (req, res) {
         if (err) {
             res.status(500).json(err);
         } else {
-            paymentPackage.findOne({'_id': req.body.checkID}).select().exec(function(err, packageData) {
-                if(err) {
+            paymentPackage.findOne({
+                '_id': req.body.checkID
+            }).select().exec(function (err, packageData) {
+                if (err) {
                     res.status(500).json(err);
                 } else {
-                     var currentDate = new Date();
-        var startDay = currentDate.getDate();
-        var startMonth = currentDate.getMonth() + 1;
-        var startYear = currentDate.getFullYear();
-        var starting = startMonth + "/" + startDay + "/" + startYear;
-        var lastDate = new Date();
-        lastDate.setDate(currentDate.getDate() + packageData.duration);
-        var closingDay = lastDate.getDate();
-        var closingMonth = lastDate.getMonth() + 1;
-        var closingYear = lastDate.getFullYear();
-        var closing = closingMonth + "/" + closingDay + "/" + closingYear;
-        let package = {
-            grade: packageData.grade,
-            duration: packageData.duration,
-            amount: packageData.amount,
-            startingDate: starting,
-            closingDate: closing
-        }
-        businessUserDetail.findOneAndUpdate({"_id": userFirstSave._id},
-        { $push: {
-            packageDetails: package
-        }}, function(err, data) {
-            if(err) {
-                res.status(500).json(err); 
-            } else {
-                res.status(200).json(data);
-            }
-        })
+                    var currentDate = new Date();
+                    var startDay = currentDate.getDate();
+                    var startMonth = currentDate.getMonth() + 1;
+                    var startYear = currentDate.getFullYear();
+                    var starting = startMonth + "/" + startDay + "/" + startYear;
+                    var lastDate = new Date();
+                    lastDate.setDate(currentDate.getDate() + packageData.duration);
+                    var closingDay = lastDate.getDate();
+                    var closingMonth = lastDate.getMonth() + 1;
+                    var closingYear = lastDate.getFullYear();
+                    var closing = closingMonth + "/" + closingDay + "/" + closingYear;
+                    let package = {
+                        grade: packageData.grade,
+                        duration: packageData.duration,
+                        amount: packageData.amount,
+                        startingDate: starting,
+                        closingDate: closing,
+                        active: true
+                    }
+                    businessUserDetail.findOneAndUpdate({
+                        "_id": userFirstSave._id
+                    }, {
+                        $push: {
+                            packageDetails: package
+                        }
+                    }, function (err, data) {
+                        if (err) {
+                            res.status(500).json(err);
+                        } else {
+                            res.status(200).json(data);
+                        }
+                    })
                 }
             })
         }
@@ -191,8 +197,6 @@ exports.uploadCompanyImage = function (req, file, res) {
         if (err) {
             res.status(500).json(err);
         } else {
-
-
             if (data.companyImageName.length !== 0) {
                 var ID = file.originalname;
                 var i = data.companyImageName.indexOf(ID);
@@ -331,8 +335,12 @@ exports.createIndes = function (req, res) {
     businessUserDetail.createIndexes({
         "companyName": "text"
     })
-    businessUserDetail.find({$text: {$search: req.body.search}}).select().exec(function(err, data) {
-        if(err) {
+    businessUserDetail.find({
+        $text: {
+            $search: req.body.search
+        }
+    }).select().exec(function (err, data) {
+        if (err) {
             res.status(500).json(err);
         } else {
             res.status(200).json(data);
@@ -340,10 +348,25 @@ exports.createIndes = function (req, res) {
     })
 }
 exports.getSearch = function (req, res) {
-    businessUserDetail.createIndexes({
-        "companyName": "text", "categoryName": "text", "subCategoryName": "text", "country": "text"
-    })
-    businessUserDetail.find({$text: {$search: req.params.search}}, {score: {$meta: "textScore"}}).sort({score:{$meta:"textScore"}}).select().exec(function (err, data) {
+    /* businessUserDetail.createIndexes({
+        "companyName": "text",
+        "categoryName": "text",
+        "subCategoryName": "text",
+        "country": "text"
+    }) */
+    businessUserDetail.find({
+        $text: {
+            $search: req.params.search
+        }
+    }, {
+        score: {
+            $meta: "textScore"
+        }
+    }).sort({
+        score: {
+            $meta: "textScore"
+        }
+    }).select().exec(function (err, data) {
         if (err) {
             res.status(500).json(err);
         } else {
@@ -427,12 +450,77 @@ exports.getVistiorCount = function (req, res) {
     })
 }
 
-exports.getPaymentPackage = function(req, res) {
-    paymentPackage.find({}).sort({grade: 1}).exec(function(err, data) {
-        if(err) {
+exports.getPaymentPackage = function (req, res) {
+    paymentPackage.find({}).sort({
+        grade: 1
+    }).exec(function (err, data) {
+        if (err) {
             res.status(500).json(err);
         } else {
             res.status(200).json(data);
+        }
+    })
+}
+
+exports.checkExpiry = function (req, res) {
+    var currentDate = new Date();
+    businessUserDetail.updateMany({
+        'packageDetails.closingDate': {
+            $lt: currentDate
+        },
+        'packageDetails.active': true
+    }, {
+        $set: {
+            'packageDetails.$.active': false
+        }
+    }).exec(function (err, data) {
+        if (err) {
+            res.status(500).json(err);
+        } else {
+            res.status(200).json(data);
+        }
+    })
+}
+
+exports.updatePayment = function (req, res) {
+    paymentPackage.findOne({
+        '_id': req.body.checkID
+    }).select().exec(function (err, packageDetail) {
+        if (err) {
+            res.status(500).json(err);
+        } else {
+            var currentDate = new Date();
+            var startDay = currentDate.getDate();
+            var startMonth = currentDate.getMonth() + 1;
+            var startYear = currentDate.getFullYear();
+            var starting = startMonth + "/" + startDay + "/" + startYear;
+            var lastDate = new Date();
+            lastDate.setDate(currentDate.getDate() + packageDetail.duration);
+            var closingDay = lastDate.getDate();
+            var closingMonth = lastDate.getMonth() + 1;
+            var closingYear = lastDate.getFullYear();
+            var closing = closingMonth + "/" + closingDay + "/" + closingYear;
+            let updateData = {
+                grade: packageDetail.grade,
+                duration: packageDetail.duration,
+                amount: packageDetail.amount,
+                startingDate: starting,
+                closingDate: closing,
+                active: true
+            }
+            businessUserDetail.findOneAndUpdate({
+                '_id': req.params.id
+            }, {
+                $push: {
+                    packageDetails: updateData
+                }
+            }, function (err, data) {
+                if (err) {
+                    res.status(500).json(err);
+                } else {
+                    res.status(200).json(data);
+                }
+            })
         }
     })
 }

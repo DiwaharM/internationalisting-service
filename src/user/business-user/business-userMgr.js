@@ -222,3 +222,17 @@ exports.getPaymentPackage = function (req, res) {
         console.log(error);
     }
 }
+exports.checkExpiry = function (req, res) {
+    try {
+        businessDA.checkExpiry(req, res);
+    } catch (error) {
+        console.log(error);
+    }
+}
+exports.updatePayment = function (req, res) {
+    try {
+        businessDA.updatePayment(req, res);
+    } catch (error) {
+        console.log(error);
+    }
+}

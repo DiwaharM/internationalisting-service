@@ -5,8 +5,8 @@ var customerLogs = require('../../model/customerLog.model');
 var paymentPackage = require('../../model/paymentPackage.model');
 var Razorpay = require('razorpay');
 var instance = new Razorpay({
-  key_id: 'rzp_test_IVmiDNcNn8ejem',
-  key_secret: 'XkqygXglwUJSKEgLxQ2e7KPV'
+  key_id: 'rzp_live_8qoHdemEkXVG4k',
+  key_secret: 'eZcVK8TMXEpSiQJPNu70l6H0'
 })
 
 exports.createBusinessUser = function (req, res) {
@@ -50,7 +50,7 @@ exports.createBusinessUser = function (req, res) {
                     var options = {
                         // amount in pase
                         amount: packageData.amount ,
-                        currency: "USD",
+                        currency: "INR",
                         receipt: "RCPTID43",
                         payment_capture: '1'
                       };

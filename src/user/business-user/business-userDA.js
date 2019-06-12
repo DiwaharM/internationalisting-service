@@ -6,8 +6,8 @@ var paymentPackage = require('../../model/paymentPackage.model');
 var fs = require('fs');
 var Razorpay = require('razorpay');
 var instance = new Razorpay({
-  key_id: 'rzp_test_IVmiDNcNn8ejem',
-  key_secret: 'XkqygXglwUJSKEgLxQ2e7KPV'
+  key_id: 'rzp_live_8qoHdemEkXVG4k',
+  key_secret: 'eZcVK8TMXEpSiQJPNu70l6H0'
 })
 
 exports.createBusinessUser = function (req, res) {

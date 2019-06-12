@@ -215,6 +215,21 @@ exports.getVistiorCount = function (req, res) {
         console.log(error);
     }
 }
+exports.getClientToken = function (req, res) {
+    try {
+        businessDA.getClientToken(req, res);
+    } catch (error) {
+        console.log(error);
+    }
+}
+exports.createPayment = function (req, res) {
+    try {
+        businessDA.createPayment(req, res);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 exports.getPaymentPackage = function (req, res) {
     try {
         businessDA.getPaymentPackage(req, res);
@@ -232,6 +247,14 @@ exports.checkExpiry = function (req, res) {
 exports.updatePayment = function (req, res) {
     try {
         businessDA.updatePayment(req, res);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+exports.addRazorPayDetails = function (req, res) {
+    try {
+        businessDA.addRazorPayDetails(req, res);
     } catch (error) {
         console.log(error);
     }

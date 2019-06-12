@@ -7,3 +7,10 @@ exports.getContact = function (req, res) {
         console.log(error);
     }
 }
+exports.createContact = function (req, res) {
+    try {
+        contactDA.createContact(req, res);
+    } catch (error) {
+        console.log(error);
+    }
+}

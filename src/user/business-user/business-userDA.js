@@ -222,6 +222,7 @@ exports.getProfile = function (req, res) {
     })
 }
 exports.uploadCompanyImage = function (req, file, res) {
+    var temp = [];
     businessUserDetail.findOne({
         '_id': req.params.id
     }).select().exec(function (err, data) {
@@ -234,19 +235,18 @@ exports.uploadCompanyImage = function (req, file, res) {
                 if (i > -1) {
                     console.log('Exist');
                 } else {
-                    data.companyImageName.push(file.originalname);
-                    data.save(function (err, data) {
+                  data.companyImageName.push(file.originalname); 
+                    data.save(function (err, data1) {
                         if (err) {
                             res.status(500).send({
                                 "result": 0
                             });
                         } else {
-                            /*  console.log(data); */
-                            res.status(200).json(data);
+                            console.log(data1);
                         }
                     })
                 }
-            } else if (data.companyImageName.length === 0) {
+            } else {
                 data.companyImageName.push(file.originalname);
                 data.save(function (err, data) {
                     if (err) {
@@ -254,22 +254,12 @@ exports.uploadCompanyImage = function (req, file, res) {
                             "result": 0
                         });
                     } else {
-                        /*  console.log(data); */
-                        res.status(200).json(data);
+                        res.status(200).json(true);
+                        console.log(data);
                     }
                 })
             }
 
-
-
-            /* data[0].companyImageName = file;
-            data.save(function(err, data) {
-                if(err) {
-                    res.status(500).json(err);
-                } else {
-                    res.status(200).json(data);
-                }
-            }) */
         }
     })
 }
@@ -281,10 +271,13 @@ exports.getPackageDetail = function (req, res) {
         if (err) {
             res.status(500).json(err);
         } else {
-            /*  var firstValue = []; */
+            
+            if(data.packageDetails.length !== 0) {
             firstValue = data.packageDetails;
-            /*  console.log(firstValue); */
             res.status(200).json(firstValue);
+        } else {
+            res.status(200).json(data);
+        }
         }
     })
 }

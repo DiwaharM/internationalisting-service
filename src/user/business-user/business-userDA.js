@@ -3,6 +3,11 @@ var categoryDetail = require('../../model/superCategory.model');
 var appSetting = require('../../config/appSetting');
 var customerLogs = require('../../model/customerLog.model');
 var paymentPackage = require('../../model/paymentPackage.model');
+var Razorpay = require('razorpay');
+var instance = new Razorpay({
+  key_id: 'rzp_test_IVmiDNcNn8ejem',
+  key_secret: 'XkqygXglwUJSKEgLxQ2e7KPV'
+})
 
 exports.createBusinessUser = function (req, res) {
     var createBusUser = new businessUserDetail();
@@ -42,19 +47,45 @@ exports.createBusinessUser = function (req, res) {
                         closingDate: closing,
                         active: true
                     }
-                    businessUserDetail.findOneAndUpdate({
-                        "_id": userFirstSave._id
-                    }, {
-                        $push: {
-                            packageDetails: package
-                        }
-                    }, function (err, data) {
-                        if (err) {
-                            res.status(500).json(err);
-                        } else {
-                            res.status(200).json(data);
-                        }
-                    })
+                    var options = {
+                        // amount in pase
+                        amount: packageData.amount ,
+                        currency: "USD",
+                        receipt: "RCPTID43",
+                        payment_capture: '1'
+                      };
+                      instance.orders.create(options, function(err, order) { 
+                          if(err) {
+                              console.log(err);
+                          } else {
+                            businessUserDetail.findOneAndUpdate({
+                                "_id": userFirstSave._id
+                            }, {
+                                razorpayOrderId: order.id,
+                                $push: {
+                                    packageDetails: package
+                                },
+                                
+                            }, function (err, data) {
+                                if (err) {
+                                    res.status(500).json(err);
+                                } else {
+                                    businessUserDetail.findOne({
+                                        '_id': userFirstSave._id
+                                    }).select().exec(function (err, data) {
+                                        if (err) {
+                                            res.status(500).json(err);
+                                        } else {
+                                            res.status(200).json(data);
+                                        }
+                                    })
+                                    
+                                }
+                            })
+                             /* res.status(200).json(order); */
+                          }
+                      })
+                   
                 }
             })
         }
@@ -449,6 +480,42 @@ exports.getVistiorCount = function (req, res) {
         }
     })
 }
+exports.getClientToken = function (req, res) {
+    gateway.clientToken.generate({}, function (err, response) {
+        var clientToken = response.clientToken;
+       if(err) {
+           console.log(err);
+       } else {
+        res.status(200).json(clientToken);
+       }
+        
+      });
+}
+exports.createPayment = function (req, res) {
+    var nonceFromTheClient = req.params.id;
+    // Create a new transaction for $10
+    var newTransaction = gateway.transaction.sale({
+      amount: '1.00',
+      paymentMethodNonce: nonceFromTheClient,  // fake payment method
+      options: {
+        // This option requests the funds from the transaction
+        // once it has been authorized successfully
+        submitForSettlement: true,
+        paypal: {
+          customField: "custom",
+          description: "description"
+      }
+      }
+    }, function(error, result) {
+        if (result) {
+          console.log('result', result);
+          res.send(result);
+        } else {
+          console.log(err);
+          res.status(500).send(error);
+        }
+    });
+}
 
 exports.getPaymentPackage = function (req, res) {
     paymentPackage.find({}).sort({
@@ -515,6 +582,25 @@ exports.updatePayment = function (req, res) {
                     packageDetails: updateData
                 }
             }, function (err, data) {
+                if (err) {
+                    res.status(500).json(err);
+                } else {
+                    res.status(200).json(data);
+                }
+            })
+        }
+    })
+}
+exports.addRazorPayDetails = function (req, res) {
+    businessUserDetail.findOne({
+        '_id': req.params.id
+    }).select().exec(function (err, data) {
+        if (err) {
+            res.status(500).json(err);
+        } else {
+            data.razorpayPaymentId = req.body.paymentId;
+            data.razorpaySignature = req.body.razorpaySignature;
+            data.save(function (err, data) {
                 if (err) {
                     res.status(500).json(err);
                 } else {

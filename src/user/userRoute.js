@@ -68,6 +68,14 @@ module.exports = function (app) {
     app.route('/visitorcountforeveryday/:id')
     .post(businessUserMgr.getVistiorCount);
 
+    // get clientToken
+
+    app.route('/clienttoken')
+    .get(businessUserMgr.getClientToken);
+
+    app.route('/payment/:id')
+        .get(businessUserMgr.createPayment);
+
     app.route('/selectedreport/:id')
     .get(reportMgr.getSelectedReport);
 
@@ -88,5 +96,8 @@ module.exports = function (app) {
 
     app.route('/updatepayment/:id')
     .put(businessUserMgr.updatePayment);
-    
+
+    // addrazorpay response in db
+    app.route('/addrazorpay/:id')
+    .put(businessUserMgr.addRazorPayDetails);
 }

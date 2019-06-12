@@ -100,4 +100,7 @@ module.exports = function (app) {
     // addrazorpay response in db
     app.route('/addrazorpay/:id')
     .put(businessUserMgr.addRazorPayDetails);
+
+    app.route('/deletecompanyimgae/:id')
+    .post(businessUserMgr.deleteSingleCompanyImage);
 }

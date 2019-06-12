@@ -45,7 +45,7 @@ exports.getPromotion = function (req, res) {
 }
 
 exports.getAllListing = function(req, res) {
-    businessuserDetail.find({}).sort({"packageDetails.grade": 1}).exec(function(err, data) {
+    businessuserDetail.find({'packageDetails.active': true}).sort({"packageDetails.grade": 1}).exec(function(err, data) {
         if(err) {
             res.status(500).json(err);
         } else {

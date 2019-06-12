@@ -259,3 +259,10 @@ exports.addRazorPayDetails = function (req, res) {
         console.log(error);
     }
 }
+exports.deleteSingleCompanyImage = function (req, res) {
+    try {
+        businessDA.deleteSingleCompanyImage(req, res);
+    } catch (error) {
+        console.log(error);
+    }
+}

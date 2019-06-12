@@ -1,9 +1,11 @@
 var mongoose = require('mongoose');
 
 const ContactSchema = new mongoose.Schema({
-    phoneNumber: String,
+    mobileNumber: String,
     emailId: String,
-    address: String
+    description: String,
+    firstName: String,
+    lastName: String
 });
 const contact = mongoose.model('contacts', ContactSchema);
 module.exports = contact;

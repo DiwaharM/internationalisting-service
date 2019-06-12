@@ -16,6 +16,7 @@ module.exports = function (app) {
     app.route('/getprivacypolicy').get(privacyMgr.getPrivacyPolicy);
     app.route('/getsupport').get(supportMgr.getSupport);
     app.route('/getcontact').get(contactMgr.getContact);
+    app.route('/createcontactus').post(contactMgr.createContact);
     app.route('/getfaq').get(faqMgr.getFaq);
     app.route('/getpromotion').get(promotionMgr.getPromotion);
     app.route('/getalllistinggradewise').get(promotionMgr.getAllListing);

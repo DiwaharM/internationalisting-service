@@ -43,6 +43,7 @@ exports.createBusinessUser = function (req, res) {
                     let package = {
                         grade: packageData.grade,
                         duration: packageData.duration,
+                        month: packageData.month,
                         amount: packageData.amount,
                         startingDate: starting,
                         closingDate: closing,
@@ -651,6 +652,8 @@ exports.updateCompanyDetail = function (req, res) {
             data.listingCompanyName = req.body.listingCompanyName;
             data.listingCountry = req.body.listingCountry;
             data.listingEmailId = req.body.listingEmailId;
+            data.categoryName = req.body.categoryName;
+            data.subCategoryName = req.body.subCategoryName;
             data.listingMobileNumber = req.body.listingMobileNumber;
             data.weblink = req.body.weblink;
             data.save(function (err, data1) {

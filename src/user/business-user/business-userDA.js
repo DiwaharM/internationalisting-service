@@ -275,7 +275,8 @@ exports.getPackageDetail = function (req, res) {
             
             if(data.packageDetails.length !== 0) {
             firstValue = data.packageDetails;
-            res.status(200).json(firstValue);
+            secondValue = firstValue.filter(value => value.active === true);
+            res.status(200).json(secondValue);
         } else {
             res.status(200).json(data);
         }

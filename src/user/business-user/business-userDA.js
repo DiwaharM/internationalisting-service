@@ -6,8 +6,8 @@ var paymentPackage = require('../../model/paymentPackage.model');
 var fs = require('fs');
 var Razorpay = require('razorpay');
 var instance = new Razorpay({
-  key_id: 'rzp_live_8qoHdemEkXVG4k',
-  key_secret: 'eZcVK8TMXEpSiQJPNu70l6H0'
+    key_id: 'rzp_live_8qoHdemEkXVG4k',
+    key_secret: 'eZcVK8TMXEpSiQJPNu70l6H0'
 })
 
 exports.createBusinessUser = function (req, res) {
@@ -55,11 +55,11 @@ exports.createBusinessUser = function (req, res) {
                         currency: "INR",
                         receipt: "RCPTID43",
                         payment_capture: '1'
-                      };
-                      instance.orders.create(options, function(err, order) { 
-                          if(err) {
-                              console.log(err);
-                          } else {
+                    };
+                    instance.orders.create(options, function (err, order) {
+                        if (err) {
+                            console.log(err);
+                        } else {
                             businessUserDetail.findOneAndUpdate({
                                 "_id": userFirstSave._id
                             }, {
@@ -67,7 +67,7 @@ exports.createBusinessUser = function (req, res) {
                                 $push: {
                                     packageDetails: package
                                 },
-                                
+
                             }, function (err, data) {
                                 if (err) {
                                     res.status(500).json(err);
@@ -81,13 +81,12 @@ exports.createBusinessUser = function (req, res) {
                                             res.status(200).json(data);
                                         }
                                     })
-                                    
+
                                 }
                             })
-                             /* res.status(200).json(order); */
-                          }
-                      })
-                   
+                        }
+                    })
+
                 }
             })
         }
@@ -99,23 +98,14 @@ exports.getAllCategory = function (req, res) {
         if (err) {
             res.status(500).json(err);
         } else {
-
-            /*    var firstValue = [];
-               for(let i = 0; i <= data.length - 1; i++) {
-                   var secondValue = data[i].categoryName;
-                   firstValue.push(secondValue);
-               } */
-            /*   res.status(200).json(data); */
             var categoryLength = data.length - 1;
             for (var i = 0; i <= categoryLength; i++) {
                 data[i].categoryImageName = appSetting.categoryServerPath + data[i].categoryName + '/' + data[i].categoryImageName;
             }
             res.status(200).json(data);
-
         }
     })
 }
-
 exports.SelecetedSubCategory = function (req, res) {
     categoryDetail.find({
         '_id': req.body.category
@@ -123,18 +113,10 @@ exports.SelecetedSubCategory = function (req, res) {
         if (err) {
             res.status(500).json(err);
         } else {
-
-            /*    var firstValue = [];
-               var secondValue = data.keyWord;
-               for(let i = 0; i <= secondValue.length - 1; i++) {
-                   var thirdValue = secondValue[i].key;
-                   firstValue.push(thirdValue);
-               } */
             res.status(200).json(data);
         }
     })
 }
-
 exports.addCompanyDetails = function (req, res) {
     businessUserDetail.findOne({
         '_id': req.params.id
@@ -144,6 +126,7 @@ exports.addCompanyDetails = function (req, res) {
         } else {
             data.listingCompanyName = req.body.listingCompanyName;
             data.listingCountry = req.body.listingCountry;
+            data.listingState = req.body.listingState;
             data.listingEmailId = req.body.listingEmailId;
             data.listingMobileNumber = req.body.listingMobileNumber;
             data.weblink = req.body.weblink;
@@ -178,21 +161,11 @@ exports.createLogoImage = function (req, file, res) {
                     });
                 } else {
                     res.status(200).json(data1);
-                    /*   businessUserDetail.find({}).select().exec(function (err, data) {
-                          if (err) {
-                              res.status(500).send({
-                                  "result": 'error occured while retreiving data'
-                              })
-                          } else {
-                              res.status(200).json(data);
-                          }
-                      }) */
                 }
             })
         }
     });
 }
-
 exports.businessLogin = function (req, res) {
     businessUserDetail.find({
         'emailId': req.body.emailId,
@@ -205,7 +178,6 @@ exports.businessLogin = function (req, res) {
         }
     })
 }
-
 exports.getProfile = function (req, res) {
     businessUserDetail.find({
         '_id': req.params.id
@@ -237,7 +209,7 @@ exports.uploadCompanyImage = function (req, file, res) {
                 if (i > -1) {
                     console.log('Exist');
                 } else {
-                  data.companyImageName.push(file.originalname); 
+                    data.companyImageName.push(file.originalname);
                     data.save(function (err, data1) {
                         if (err) {
                             res.status(500).send({
@@ -256,16 +228,13 @@ exports.uploadCompanyImage = function (req, file, res) {
                             "result": 0
                         });
                     } else {
-                       /*  res.status(200).json(true); */
                         console.log(data);
                     }
                 })
             }
-
         }
     })
 }
-
 exports.getPackageDetail = function (req, res) {
     businessUserDetail.findOne({
         '_id': req.params.id
@@ -273,18 +242,16 @@ exports.getPackageDetail = function (req, res) {
         if (err) {
             res.status(500).json(err);
         } else {
-            
-            if(data.packageDetails.length !== 0) {
-            firstValue = data.packageDetails;
-            secondValue = firstValue.filter(value => value.active === true);
-            res.status(200).json(secondValue);
-        } else {
-            res.status(200).json(data);
-        }
+            if (data.packageDetails.length !== 0) {
+                firstValue = data.packageDetails;
+                secondValue = firstValue.filter(value => value.active === true);
+                res.status(200).json(secondValue);
+            } else {
+                res.status(200).json(data);
+            }
         }
     })
 }
-
 exports.updateProfileDetails = function (req, res) {
     businessUserDetail.findOne({
         '_id': req.params.id
@@ -308,7 +275,6 @@ exports.updateProfileDetails = function (req, res) {
         }
     })
 }
-
 exports.getSelectedBusinessUser = function (req, res) {
     businessUserDetail.findOne({
         '_id': req.params.id
@@ -320,8 +286,6 @@ exports.getSelectedBusinessUser = function (req, res) {
         }
     })
 }
-
-
 exports.changePassword = function (req, res) {
     businessUserDetail.findOne({
         '_id': req.params.id
@@ -340,7 +304,6 @@ exports.changePassword = function (req, res) {
         }
     })
 }
-
 exports.getSimilarCompany = function (req, res) {
     businessUserDetail.find({
         'category': req.params.id
@@ -407,16 +370,13 @@ exports.getSearch = function (req, res) {
         }
     })
 }
-
 exports.saveViewCount = function (req, res) {
-
     businessUserDetail.findOne({
         '_id': req.params.id
     }).select().exec(function (err, data) {
         if (err) {
             res.status(500).json(err);
         } else {
-
             var firstValue = req.body.customerLogs;
             if (data.customerLogs.length === 0) {
                 data.customerLogs.push(firstValue);
@@ -454,7 +414,6 @@ exports.saveViewCount = function (req, res) {
         }
     })
 }
-
 exports.getVistiorCount = function (req, res) {
     businessUserDetail.findOne({
         '_id': req.params.id
@@ -479,40 +438,38 @@ exports.getVistiorCount = function (req, res) {
 exports.getClientToken = function (req, res) {
     gateway.clientToken.generate({}, function (err, response) {
         var clientToken = response.clientToken;
-       if(err) {
-           console.log(err);
-       } else {
-        res.status(200).json(clientToken);
-       }
-        
-      });
+        if (err) {
+            console.log(err);
+        } else {
+            res.status(200).json(clientToken);
+        }
+    });
 }
 exports.createPayment = function (req, res) {
     var nonceFromTheClient = req.params.id;
     // Create a new transaction for $10
     var newTransaction = gateway.transaction.sale({
-      amount: '1.00',
-      paymentMethodNonce: nonceFromTheClient,  // fake payment method
-      options: {
-        // This option requests the funds from the transaction
-        // once it has been authorized successfully
-        submitForSettlement: true,
-        paypal: {
-          customField: "custom",
-          description: "description"
-      }
-      }
-    }, function(error, result) {
+        amount: '1.00',
+        paymentMethodNonce: nonceFromTheClient, // fake payment method
+        options: {
+            // This option requests the funds from the transaction
+            // once it has been authorized successfully
+            submitForSettlement: true,
+            paypal: {
+                customField: "custom",
+                description: "description"
+            }
+        }
+    }, function (error, result) {
         if (result) {
-          console.log('result', result);
-          res.send(result);
+            console.log('result', result);
+            res.send(result);
         } else {
-          console.log(err);
-          res.status(500).send(error);
+            console.log(err);
+            res.status(500).send(error);
         }
     });
 }
-
 exports.getPaymentPackage = function (req, res) {
     paymentPackage.find({}).sort({
         grade: 1
@@ -524,7 +481,6 @@ exports.getPaymentPackage = function (req, res) {
         }
     })
 }
-
 exports.checkExpiry = function (req, res) {
     var currentDate = new Date();
     businessUserDetail.updateMany({
@@ -544,7 +500,6 @@ exports.checkExpiry = function (req, res) {
         }
     })
 }
-
 exports.updatePayment = function (req, res) {
     paymentPackage.findOne({
         '_id': req.body.checkID
@@ -607,31 +562,39 @@ exports.addRazorPayDetails = function (req, res) {
         }
     })
 }
-exports.deleteSingleCompanyImage = function(req, res) {
-    businessUserDetail.findOne({'_id': req.params.id}).select().exec(function(err, data) {
-        if(err) {
+exports.deleteSingleCompanyImage = function (req, res) {
+    businessUserDetail.findOne({
+        '_id': req.params.id
+    }).select().exec(function (err, data) {
+        if (err) {
             res.status(500).json(err);
         } else {
             const PATH = appSetting.businessUserUploadPath + '/' + req.params.id + '/' + 'companyImage' + '/' + req.body.companyImageName;
             fs.unlink(PATH, (err) => {
-                if(err) {
+                if (err) {
                     throw err;
                 } else {
-                    businessUserDetail.update({'_id': req.params.id}, { $pull: {companyImageName: req.body.companyImageName}}).select().exec(function(err, data) {
-                        if(err) {
+                    businessUserDetail.update({
+                        '_id': req.params.id
+                    }, {
+                        $pull: {
+                            companyImageName: req.body.companyImageName
+                        }
+                    }).select().exec(function (err, data) {
+                        if (err) {
                             res.status(500).json(err);
                         } else {
-                            businessUserDetail.find({}).select().exec(function(err, data) {
-                                if(err) {
+                            businessUserDetail.find({}).select().exec(function (err, data) {
+                                if (err) {
                                     res.status(500).json(err);
                                 } else {
-                                  for (let i = 0; i <= data.length - 1; i++) {
-                                data[i].logImageName = appSetting.businessUserServerPath + data[i]._id + '/' + 'logo' + '/' + data[i].logImageName;
-                                for (let j = 0; j <= data[i].companyImageName.length - 1; j++) {
-                                    data[i].companyImageName[j] = appSetting.businessUserServerPath + data[i]._id + '/' + 'companyImage' + '/' + data[i].companyImageName[j];
-                                }
-                            }
-                            res.status(200).json(data);    
+                                    for (let i = 0; i <= data.length - 1; i++) {
+                                        data[i].logImageName = appSetting.businessUserServerPath + data[i]._id + '/' + 'logo' + '/' + data[i].logImageName;
+                                        for (let j = 0; j <= data[i].companyImageName.length - 1; j++) {
+                                            data[i].companyImageName[j] = appSetting.businessUserServerPath + data[i]._id + '/' + 'companyImage' + '/' + data[i].companyImageName[j];
+                                        }
+                                    }
+                                    res.status(200).json(data);
                                 }
                             })
                         }
@@ -641,7 +604,6 @@ exports.deleteSingleCompanyImage = function(req, res) {
         }
     })
 }
-
 exports.updateCompanyDetail = function (req, res) {
     businessUserDetail.findOne({
         '_id': req.params.id
@@ -652,8 +614,11 @@ exports.updateCompanyDetail = function (req, res) {
             data.listingCompanyName = req.body.listingCompanyName;
             data.listingCountry = req.body.listingCountry;
             data.listingEmailId = req.body.listingEmailId;
+            data.listingState = req.body.listingState;
             data.categoryName = req.body.categoryName;
             data.subCategoryName = req.body.subCategoryName;
+            data.category = req.body.category;
+            data.subCategory = req.body.subCategory;
             data.listingMobileNumber = req.body.listingMobileNumber;
             data.weblink = req.body.weblink;
             data.save(function (err, data1) {

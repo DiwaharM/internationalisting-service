@@ -6,7 +6,6 @@ exports.createReview = function (req, res) {
     var month = currentDate.getMonth();
     var year = currentDate.getFullYear();
     var dateString = date + "/" + (month + 1) + "/" + year;
-
     var CreateReview = new reviewDetail();
     CreateReview.reviewTitle = req.body.reviewTitle;
     CreateReview.reviewDescription = req.body.reviewDescription;
@@ -22,7 +21,6 @@ exports.createReview = function (req, res) {
         }
     })
 }
-
 exports.getReview = function (req, res) {
     reviewDetail.find({
         'listingID': req.params.id

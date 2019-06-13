@@ -6,104 +6,104 @@ var reportMgr = require('./report/reportMgr');
 module.exports = function (app) {
 
     app.route('/makesubscribe')
-    .post(subscribeMgr.createSubscribeUser);
+        .post(subscribeMgr.createSubscribeUser);
 
     app.route('/createbusinessuser')
-    .post(businessUserMgr.createBusinessUser);
+        .post(businessUserMgr.createBusinessUser);
 
     app.route('/getallcategory')
-    .get(businessUserMgr.getAllCategory);
+        .get(businessUserMgr.getAllCategory);
 
     app.route('/getselectedsubcategory')
-    .post(businessUserMgr.SelecetedSubCategory);
+        .post(businessUserMgr.SelecetedSubCategory);
 
     app.route('/storecompanydetails/:id')
-    .post(businessUserMgr.addCompanyDetails);
+        .post(businessUserMgr.addCompanyDetails);
 
     app.route('/createlogoimage/:id')
-    .put(businessUserMgr.createLogoImage);
+        .put(businessUserMgr.createLogoImage);
 
     app.route('/businesslogin')
-    .post(businessUserMgr.businessLogin);
+        .post(businessUserMgr.businessLogin);
 
     app.route('/getselectedbusinessuser/:id')
-    .get(businessUserMgr.getProfile);
+        .get(businessUserMgr.getProfile);
 
     app.route('/uploadcompanyimage/:id')
-    .post(businessUserMgr.uploadCompanyImage);
+        .post(businessUserMgr.uploadCompanyImage);
 
     app.route('/getselectedpackage/:id')
-    .get(businessUserMgr.getPackageDetail);
+        .get(businessUserMgr.getPackageDetail);
 
     app.route('/updateprofile/:id')
-    .post(businessUserMgr.updateProfileDetails);
+        .post(businessUserMgr.updateProfileDetails);
 
     app.route('/getbusinessusername/:id')
-    .get(businessUserMgr.getSelectedBusinessUser);
+        .get(businessUserMgr.getSelectedBusinessUser);
 
     app.route('/getsubscriberusername/:id')
-    .get(subscribeMgr.getSelectedSubscriberUser);
+        .get(subscribeMgr.getSelectedSubscriberUser);
 
     app.route('/createreview')
-    .post(reviewMgr.createReview);
+        .post(reviewMgr.createReview);
 
     app.route('/getselectedreviews/:id')
-    .get(reviewMgr.getReview);
+        .get(reviewMgr.getReview);
 
     app.route('/changepassword/:id')
-    .post(businessUserMgr.changePassword);
+        .post(businessUserMgr.changePassword);
 
     app.route('/getsimilarcomany/:id')
-    .get(businessUserMgr.getSimilarCompany);
+        .get(businessUserMgr.getSimilarCompany);
 
     app.route('/search/:search')
-    .get(businessUserMgr.getSearch);
+        .get(businessUserMgr.getSearch);
 
     app.route('/set')
-    .post(businessUserMgr.createIndes);
+        .post(businessUserMgr.createIndes);
 
     app.route('/addviewcounting/:id')
-    .post(businessUserMgr.saveViewCount);
+        .post(businessUserMgr.saveViewCount);
 
     app.route('/visitorcountforeveryday/:id')
-    .post(businessUserMgr.getVistiorCount);
+        .post(businessUserMgr.getVistiorCount);
 
     // get clientToken
 
     app.route('/clienttoken')
-    .get(businessUserMgr.getClientToken);
+        .get(businessUserMgr.getClientToken);
 
     app.route('/payment/:id')
         .get(businessUserMgr.createPayment);
 
     app.route('/selectedreport/:id')
-    .get(reportMgr.getSelectedReport);
+        .get(reportMgr.getSelectedReport);
 
     app.route('/selectedcurrentreport/:id')
-    .post(reportMgr.getCurrentReport);
+        .post(reportMgr.getCurrentReport);
 
     app.route('/subscriberselectedreport/:id')
-    .get(reportMgr.getSubscriberSelectedReport);
+        .get(reportMgr.getSubscriberSelectedReport);
 
     app.route('/subscriberselectedcurrentreport/:id')
-    .post(reportMgr.getSubscriberCurrentReport);
+        .post(reportMgr.getSubscriberCurrentReport);
 
     app.route('/getallpaymentpackage')
-    .get(businessUserMgr.getPaymentPackage);
+        .get(businessUserMgr.getPaymentPackage);
 
     app.route('/checkExpirt')
-    .get(businessUserMgr.checkExpiry);
+        .get(businessUserMgr.checkExpiry);
 
     app.route('/updatepayment/:id')
-    .put(businessUserMgr.updatePayment);
+        .put(businessUserMgr.updatePayment);
 
     // addrazorpay response in db
     app.route('/addrazorpay/:id')
-    .put(businessUserMgr.addRazorPayDetails);
+        .put(businessUserMgr.addRazorPayDetails);
 
     app.route('/deletecompanyimgae/:id')
-    .post(businessUserMgr.deleteSingleCompanyImage);
+        .post(businessUserMgr.deleteSingleCompanyImage);
 
     app.route('/updatecompanydetails/:id')
-    .post(businessUserMgr.updateCompanyDetail);
+        .post(businessUserMgr.updateCompanyDetail);
 }

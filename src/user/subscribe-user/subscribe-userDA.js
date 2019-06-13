@@ -17,7 +17,6 @@ exports.createSubscribeUser = function (req, res) {
                     if (err) {
                         res.status(500).json(err);
                     } else {
-                        /* res.status(200).json(data); */
                         subscribeDetail.find({
                             '_id': data1.id
                         }).select().exec(function (err, data) {
@@ -33,7 +32,6 @@ exports.createSubscribeUser = function (req, res) {
         }
     })
 }
-
 exports.getSelectedSubscriberUser = function (req, res) {
     subscribeDetail.findOne({
         '_id': req.params.id

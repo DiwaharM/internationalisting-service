@@ -3,36 +3,6 @@ var mkdirp = require('mkdirp');
 const multer = require('multer');
 var appSetiing = require('../../config/appSetting');
 
-/* exports.createBusinessUser = function (req, res) {
-    try {
-        const PATH = appSetiing.businessUserUploadPath;
-        let storage = multer.diskStorage({
-            destination: (req, file, cb) => {
-                cb(null, PATH);
-                businessDA.createBusinessUser(req,file,res);
-            },
-            filename: (req, file, cb) => {
-                cb(null, file.originalname);
-            }
-        });
-
-        let upload = multer({
-            storage: storage
-        }).array('uploads[]', 20); 
-        upload(req, res, function (err) {
-            if (err) {
-                console.log(err);
-                return res.status(501).json({
-                    error: err
-                });
-            }
-        });
-
-    } catch (error) {
-        console.log(error);
-    }
-}
- */
 exports.createBusinessUser = function (req, res) {
     try {
         businessDA.createBusinessUser(req, res);
@@ -47,7 +17,6 @@ exports.getAllCategory = function (req, res) {
         console.log(error);
     }
 }
-
 exports.SelecetedSubCategory = function (req, res) {
     try {
         businessDA.SelecetedSubCategory(req, res);
@@ -55,7 +24,6 @@ exports.SelecetedSubCategory = function (req, res) {
         console.log(error);
     }
 }
-
 exports.addCompanyDetails = function (req, res) {
     try {
         businessDA.addCompanyDetails(req, res);
@@ -70,7 +38,6 @@ exports.createLogoImage = function (req, res) {
         mkdirp(PATH1);
         const PATH2 = PATH1 + '/' + 'logo';
         mkdirp(PATH2);
-
         let storage = multer.diskStorage({
             destination: (req, file, cb) => {
                 cb(null, PATH2);
@@ -80,7 +47,6 @@ exports.createLogoImage = function (req, res) {
                 cb(null, file.originalname);
             }
         });
-
         let upload = multer({
             storage: storage
         }).array('uploads[]', 20); //only 20 images can be uploaded
@@ -91,11 +57,7 @@ exports.createLogoImage = function (req, res) {
                     error: err
                 });
             }
-            /*  else {
-                            res.status(404).json(result);
-                        } */
         });
-
     } catch (error) {
         console.log(error);
     }
@@ -123,14 +85,12 @@ exports.uploadCompanyImage = function (req, res) {
         let storage = multer.diskStorage({
             destination: (req, file, cb) => {
                 cb(null, PATH);
-                /*   firstValue.push(file.originalname); */
                 businessDA.uploadCompanyImage(req, file, res);
             },
             filename: (req, file, cb) => {
                 cb(null, file.originalname);
             }
         });
-
         let upload = multer({
             storage: storage
         }).array('uploads[]', 20); //only 20 images can be uploaded
@@ -142,12 +102,10 @@ exports.uploadCompanyImage = function (req, res) {
                 });
             }
         });
-
     } catch (error) {
         console.log(error);
     }
 }
-
 exports.getPackageDetail = function (req, res) {
     try {
         businessDA.getPackageDetail(req, res);
@@ -155,7 +113,6 @@ exports.getPackageDetail = function (req, res) {
         console.log(error);
     }
 }
-
 exports.updateProfileDetails = function (req, res) {
     try {
         businessDA.updateProfileDetails(req, res);
@@ -170,7 +127,6 @@ exports.getSelectedBusinessUser = function (req, res) {
         console.log(error);
     }
 }
-
 exports.changePassword = function (req, res) {
     try {
         businessDA.changePassword(req, res);
@@ -178,7 +134,6 @@ exports.changePassword = function (req, res) {
         console.log(error);
     }
 }
-
 exports.getSimilarCompany = function (req, res) {
     try {
         businessDA.getSimilarCompany(req, res);
@@ -193,7 +148,6 @@ exports.createIndes = function (req, res) {
         console.log(error);
     }
 }
-
 exports.getSearch = function (req, res) {
     try {
         businessDA.getSearch(req, res);
@@ -229,7 +183,6 @@ exports.createPayment = function (req, res) {
         console.log(error);
     }
 }
-
 exports.getPaymentPackage = function (req, res) {
     try {
         businessDA.getPaymentPackage(req, res);
@@ -251,7 +204,6 @@ exports.updatePayment = function (req, res) {
         console.log(error);
     }
 }
-
 exports.addRazorPayDetails = function (req, res) {
     try {
         businessDA.addRazorPayDetails(req, res);

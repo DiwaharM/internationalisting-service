@@ -7,6 +7,7 @@ const BusinessUserSchema = new mongoose.Schema({
     lastName: String,
     companyName: String,
     country: String,
+    listingState: String,
     emailId: String,
     mobileNumber: String,
     password: String,

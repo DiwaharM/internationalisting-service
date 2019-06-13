@@ -2,6 +2,7 @@ var businessuserDetail = require('../../model/business-user-account.model');
 var subscribedUser = require('../../model/user-subscrie.model');
 var mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
+
 exports.getSelectedReport = function (req, res) {
     businessuserDetail.aggregate([{
             $match: {
@@ -40,13 +41,11 @@ exports.getSelectedReport = function (req, res) {
         }
     })
 }
-
 exports.getCurrentReport = function (req, res) {
     businessuserDetail.aggregate([{
             $match: {
                 _id: ObjectId(req.params.id)
             }
-
         }, {
             $unwind: "$customerLogs"
         },
@@ -54,20 +53,13 @@ exports.getCurrentReport = function (req, res) {
             $project: {
                 customerID: '$customerLogs.customerID',
                 date: '$customerLogs.date',
-                /*   compare: { $cmp: [ "$date", req.body.date ] }, */
             }
         },
         {
             $match: {
                 date: req.body.date
             }
-        }
-        /* , {
-                      $match: {
-                        _id:  ObjectId(req.params.id)
-                      }
-                  }*/
-        , {
+        }, {
             $lookup: {
                 "from": "businessuseraccounts",
                 "localField": "customerID",
@@ -88,18 +80,14 @@ exports.getCurrentReport = function (req, res) {
             })
         } else {
             res.status(200).json(data);
-            /* console.log(data); */
         }
     })
 }
-
-
 exports.getSubscriberSelectedReport = function (req, res) {
     businessuserDetail.aggregate([{
             $match: {
                 _id: ObjectId(req.params.id)
             }
-
         }, {
             $unwind: "$customerLogs"
         },
@@ -132,13 +120,11 @@ exports.getSubscriberSelectedReport = function (req, res) {
         }
     })
 }
-
 exports.getSubscriberCurrentReport = function (req, res) {
     businessuserDetail.aggregate([{
             $match: {
                 _id: ObjectId(req.params.id)
             }
-
         }, {
             $unwind: "$customerLogs"
         },
@@ -146,20 +132,13 @@ exports.getSubscriberCurrentReport = function (req, res) {
             $project: {
                 customerID: '$customerLogs.customerID',
                 date: '$customerLogs.date',
-                /*   compare: { $cmp: [ "$date", req.body.date ] }, */
             }
         },
         {
             $match: {
                 date: req.body.date
             }
-        }
-        /* , {
-                      $match: {
-                        _id:  ObjectId(req.params.id)
-                      }
-                  }*/
-        , {
+        }, {
             $lookup: {
                 "from": "usersubscribes",
                 "localField": "customerID",
@@ -180,7 +159,6 @@ exports.getSubscriberCurrentReport = function (req, res) {
             })
         } else {
             res.status(200).json(data);
-            /* console.log(data); */
         }
     })
 }

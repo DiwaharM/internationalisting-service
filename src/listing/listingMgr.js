@@ -7,7 +7,6 @@ exports.getListingByCategory = function (req, res) {
         console.log(error);
     }
 }
-
 exports.getSelectedListingByCategory = function (req, res) {
     try {
         listingDA.getSelectedListingByCategory(req, res);

@@ -7,7 +7,6 @@ exports.createSubscribeUser = function (req, res) {
         console.log(error);
     }
 }
-
 exports.getSelectedSubscriberUser = function (req, res) {
     try {
         subscribeMgr.getSelectedSubscriberUser(req, res);

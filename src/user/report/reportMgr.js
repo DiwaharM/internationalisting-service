@@ -7,7 +7,6 @@ exports.getSelectedReport = function (req, res) {
         console.log(error);
     }
 }
-
 exports.getCurrentReport = function (req, res) {
     try {
         reportDA.getCurrentReport(req, res);
@@ -15,7 +14,6 @@ exports.getCurrentReport = function (req, res) {
         console.log(error);
     }
 }
-
 exports.getSubscriberSelectedReport = function (req, res) {
     try {
         reportDA.getSubscriberSelectedReport(req, res);
@@ -23,7 +21,6 @@ exports.getSubscriberSelectedReport = function (req, res) {
         console.log(error);
     }
 }
-
 exports.getSubscriberCurrentReport = function (req, res) {
     try {
         reportDA.getSubscriberCurrentReport(req, res);

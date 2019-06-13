@@ -594,6 +594,7 @@ exports.addRazorPayDetails = function (req, res) {
         } else {
             data.razorpayPaymentId = req.body.paymentId;
             data.razorpaySignature = req.body.razorpaySignature;
+            data.paymentStatus = 'Success';
             data.save(function (err, data) {
                 if (err) {
                     res.status(500).json(err);
@@ -633,6 +634,29 @@ exports.deleteSingleCompanyImage = function(req, res) {
                             })
                         }
                     })
+                }
+            })
+        }
+    })
+}
+
+exports.updateCompanyDetail = function (req, res) {
+    businessUserDetail.findOne({
+        '_id': req.params.id
+    }).select().exec(function (err, data) {
+        if (err) {
+            res.status(500).json(err);
+        } else {
+            data.listingCompanyName = req.body.listingCompanyName;
+            data.listingCountry = req.body.listingCountry;
+            data.listingEmailId = req.body.listingEmailId;
+            data.listingMobileNumber = req.body.listingMobileNumber;
+            data.weblink = req.body.weblink;
+            data.save(function (err, data1) {
+                if (err) {
+                    res.status(500).json(err);
+                } else {
+                    res.status(200).json(data1);
                 }
             })
         }

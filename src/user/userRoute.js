@@ -103,4 +103,7 @@ module.exports = function (app) {
 
     app.route('/deletecompanyimgae/:id')
     .post(businessUserMgr.deleteSingleCompanyImage);
+
+    app.route('/updatecompanydetails/:id')
+    .post(businessUserMgr.updateCompanyDetail);
 }

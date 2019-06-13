@@ -26,7 +26,8 @@ const BusinessUserSchema = new mongoose.Schema({
     activation: Boolean,
     razorpayOrderId: String,
     razorpayPaymentId: String,
-    razorpaySignature: String
+    razorpaySignature: String,
+    paymentStatus: String
 });
 const BusinessAccount = mongoose.model('businessuseraccount', BusinessUserSchema);
 module.exports = BusinessAccount;

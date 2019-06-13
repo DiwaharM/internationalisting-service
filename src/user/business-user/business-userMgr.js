@@ -266,3 +266,10 @@ exports.deleteSingleCompanyImage = function (req, res) {
         console.log(error);
     }
 }
+exports.updateCompanyDetail = function (req, res) {
+    try {
+        businessDA.updateCompanyDetail(req, res);
+    } catch (error) {
+        console.log(error);
+    }
+}

@@ -51,7 +51,7 @@ exports.createBusinessUser = function (req, res) {
                     }
                     var options = {
                         // amount in pase
-                        amount: packageData.amount * 100,
+                        amount: packageData.amount * 100 * 69.58,
                         currency: "INR",
                         receipt: "RCPTID43",
                         payment_capture: '1'

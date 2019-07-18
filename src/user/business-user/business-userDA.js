@@ -19,6 +19,12 @@ exports.createBusinessUser = function (req, res) {
     createBusUser.emailId = req.body.emailId;
     createBusUser.mobileNumber = req.body.mobileNumber;
     createBusUser.password = req.body.password;
+    createBusUser.addressLine1 = req.body.addressLine1;
+    createBusUser.addressLine2 = req.body.addressLine2;
+    createBusUser.landMark = req.body.landMark;
+    createBusUser.city = req.body.city;
+    createBusUser.state = req.body.state;
+    createBusUser.pincode = req.body.pincode;  
     createBusUser.save(function (err, userFirstSave) {
         if (err) {
             res.status(500).json(err);
